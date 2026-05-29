@@ -31,13 +31,37 @@ const formSchema = new mongoose.Schema({
 const Form = mongoose.model("Form", formSchema);
 
 /* =======================
-Routes
+Pages Routes
 ======================= */
 
 // Home Page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+
+// Best Selling Page
+app.get("/best-selling", (req, res) => {
+  res.sendFile(path.join(__dirname, "best-selling.html"));
+});
+
+// What We Offer Page
+app.get("/offer", (req, res) => {
+  res.sendFile(path.join(__dirname, "offer.html"));
+});
+
+// Testimonials Page
+app.get("/testimonials", (req, res) => {
+  res.sendFile(path.join(__dirname, "testimonials.html"));
+});
+
+// Talk To Expert Page
+app.get("/expert", (req, res) => {
+  res.sendFile(path.join(__dirname, "expert.html"));
+});
+
+/* =======================
+API Routes
+======================= */
 
 // Form submit route
 app.post("/api/form", async (req, res) => {
@@ -46,22 +70,23 @@ app.post("/api/form", async (req, res) => {
     await data.save();
 
     res.json({ message: "Data Saved Successfully ✅" });
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error saving data ❌" });
   }
 });
 
-// Get all data (for admin)
+// Get all data
 app.get("/api/form", async (req, res) => {
   const data = await Form.find();
   res.json(data);
 });
 
-// Delete route
+// Delete data
 app.delete("/api/form/:id", async (req, res) => {
   await Form.findByIdAndDelete(req.params.id);
-  res.json({ message: "Deleted" });
+  res.json({ message: "Deleted Successfully ✅" });
 });
 
 /* =======================
