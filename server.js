@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(__dirname));
 
 /* =======================
 MongoDB Connection
@@ -32,9 +34,9 @@ const Form = mongoose.model("Form", formSchema);
 Routes
 ======================= */
 
-// Test route
+// Home Page
 app.get("/", (req, res) => {
-  res.send("Server Running 🚀");
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // Form submit route
